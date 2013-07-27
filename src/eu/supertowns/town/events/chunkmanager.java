@@ -52,7 +52,9 @@ public class chunkmanager implements Listener {
 			File f = new File(plugin.getDataFolder() + File.separator + "TownBlocks" + File.separator + world.getName() + "_x" + x + "_z"+z + ".yml");
 			if(f.exists()) {
 				FileConfiguration con = YamlConfiguration.loadConfiguration(f);
-				p.sendMessage(ChatColor.GOLD + ".oO___[Entering " + con.getString("TownName") + "]___Oo.");
+				File f2 = new File(plugin.getDataFolder() + File.separator + "Towns" + File.separator + con.getString("TownName") + ".yml");
+				FileConfiguration con2 = YamlConfiguration.loadConfiguration(f2);
+				p.sendMessage(ChatColor.GOLD + ".oO___[" + ChatColor.GREEN + "Entering town " + ChatColor.GREEN + ChatColor.UNDERLINE + con.getString("TownName") + ChatColor.GOLD + "]___Oo.\n(Mayor: " + con2.getString("mayor") + ") residents: " + con2.getInt("residentsCount"));
 			} else {
 				return;
 			}
