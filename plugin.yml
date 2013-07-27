@@ -11,9 +11,9 @@ depend: []
 softdepend: []
 
 commands:
-  randomCommand:
+ supertowns:
     description: allows you to teleport to your home
-    aliases: [home]
+    aliases: [st]
     permission:
     permission-message:
 

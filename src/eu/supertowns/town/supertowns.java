@@ -4,12 +4,16 @@ import java.util.logging.Logger;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import eu.supertowns.town.commands.commandlist;
+import eu.supertowns.town.commands.commands;
 import eu.supertowns.town.configuration.Config;
 
 public class supertowns extends JavaPlugin {
 	
 	Logger log = Logger.getLogger("Minecraft");
 	private Config config = new Config(this);
+	private commandlist cmdlist = new commandlist();
+	private commands cmd = new commands(this);
 	
 	public void logger(String string, logType logtype) {
 		String prefix = "[SuperTowns] ";
@@ -23,6 +27,9 @@ public class supertowns extends JavaPlugin {
 	public void onEnable() {
 		config.createConfiguration();
 		logger("has been enabled!", logType.info);
+		for(String command : cmdlist.getCommandList) {
+			getCommand(command).setExecutor(cmd);
+		}
 	}
 	
 	public void onDisable() {
