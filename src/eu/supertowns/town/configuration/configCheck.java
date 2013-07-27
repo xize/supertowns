@@ -84,6 +84,26 @@ public class configCheck {
 			con.set("wilderness.disableFirespread", true);
 			con.save(f);
 		}
+		if(!con.contains("townprice")) {
+			plugin.logger("no entry found for config option townprice, we change the config now!", logType.servere);
+			con.set("townprice", 10000);
+			con.save(f);
+		}
+		if(!con.contains("claimprice")) {
+			plugin.logger("no entry found for config option claimprice, we change the config now!", logType.servere);
+			con.set("claimprice", 500);
+			con.save(f);
+		}
+		if(!con.contains("taxes.enabled")) {
+			plugin.logger("no entry found for config option taxes.enabled, we change the config now!", logType.servere);
+			con.set("taxes.enabled", true);
+			con.save(f);
+		}
+		if(!con.contains("taxes.price")) {
+			plugin.logger("no entry found for config option taxes.price, we change the config now!", logType.servere);
+			con.set("taxes.price", 20);
+			con.save(f);
+		}
 		plugin.logger("config.yml is up to date:)", logType.info);
 	}
 }

@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import eu.supertowns.town.commands.commandlist;
 import eu.supertowns.town.commands.commands;
 import eu.supertowns.town.configuration.Config;
+import eu.supertowns.town.events.chunkmanager;
 
 public class supertowns extends JavaPlugin {
 	
@@ -30,6 +31,7 @@ public class supertowns extends JavaPlugin {
 		for(String command : cmdlist.getCommandList) {
 			getCommand(command).setExecutor(cmd);
 		}
+		this.getServer().getPluginManager().registerEvents(new chunkmanager(this), this);
 	}
 	
 	public void onDisable() {
