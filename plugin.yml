@@ -1,0 +1,24 @@
+name: supertowns
+version: 1.0
+description: a town plugin
+author: Xeph0re
+authors: [] 
+website:
+
+main: eu.supertowns.town.supertowns
+database: false
+depend: []
+softdepend: []
+
+commands:
+  randomCommand:
+    description: allows you to teleport to your home
+    aliases: [home]
+    permission:
+    permission-message:
+
+permissions:
+  supertowns.random:
+    description: Gives access to all plugin commands
+    children:
+      supertowns.randomSuper: true
