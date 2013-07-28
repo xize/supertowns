@@ -33,6 +33,23 @@ public class chunkmanager implements Listener {
 		}
 	}
 	
+	public boolean isPlayerInTown(Player p) {
+		World world = p.getLocation().getWorld();
+		int x = p.getLocation().getChunk().getX();
+		int z = p.getLocation().getChunk().getZ();
+		try {
+			File f = new File(plugin.getDataFolder() + File.separator + "TownBlocks" + File.separator + world.getName() + "_x" + x + "_z"+z + ".yml");
+			if(f.exists()) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	public boolean checkTown(int x, int z, World world) {
 		try {
 			File f = new File(plugin.getDataFolder() + File.separator + "TownBlocks" + File.separator + world.getName() + "_x" + x + "_z"+z + ".yml");
