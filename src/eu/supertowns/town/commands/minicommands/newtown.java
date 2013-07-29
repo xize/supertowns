@@ -80,7 +80,7 @@ public class newtown {
 								return;
 							}
 						} else {
-							sender.sendMessage(ChatColor.RED + "error this town allready exists please use a other name instead");
+							sender.sendMessage(ChatColor.RED + "error  this town allready exists please use a other name instead");
 							return;
 						}
 					} catch(Exception e) {
