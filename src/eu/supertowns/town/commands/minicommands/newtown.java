@@ -39,7 +39,7 @@ public class newtown {
 									FileConfiguration PlayerFile = YamlConfiguration.loadConfiguration(playerFile);
 									RegisteredServiceProvider<Economy> economyProvider = Bukkit.getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
 									Economy econ = economyProvider.getProvider();
-									if(econ.getBalance(sender.getName()) == fGlobalCon.getInt("townprice") || econ.getBalance(sender.getName()) > fGlobalCon.getInt("townprice")) {
+									if(econ.getBalance(sender.getName()) == fGlobalCon.getDouble("townprice") || econ.getBalance(sender.getName()) > fGlobalCon.getDouble("townprice")) {
 										if(playerFile.exists()) {
 											if(PlayerFile.isSet("town")) {
 												sender.sendMessage(ChatColor.RED + "warning you can't create a town when you are resident of town: " + PlayerFile.get("town") + " please leave this town in order to create a town!");
@@ -49,17 +49,17 @@ public class newtown {
 												PlayerFile.set("type", "mayor");
 												PlayerFile.set("town", args[1]);
 												PlayerFile.save(playerFile);
-												econ.withdrawPlayer(sender.getName(), fGlobalCon.getInt("townprice"));
+												econ.withdrawPlayer(sender.getName(), fGlobalCon.getDouble("townprice"));
 											}
 										} else {
 											PlayerFile.set("username", p.getName());
 											PlayerFile.set("type", "mayor");
 											PlayerFile.set("town", args[1]);
 											PlayerFile.save(playerFile);
-											econ.withdrawPlayer(sender.getName(), fGlobalCon.getInt("townprice"));
+											econ.withdrawPlayer(sender.getName(), fGlobalCon.getDouble("townprice"));
 										}
 									} else {
-										sender.sendMessage(ChatColor.RED + "you need more than " + fGlobalCon.getInt("townprice") + "$ to claim this town!");
+										sender.sendMessage(ChatColor.RED + "you need more than " + fGlobalCon.getDouble("townprice") + "$ to claim this town!");
 										return;
 									}
 									fTowncon.set("mayor", sender.getName());
@@ -77,7 +77,7 @@ public class newtown {
 									fTowncon.set("townSpawnPoint.Yaw", p.getLocation().getYaw());
 									fTowncon.set("townSpawnPoint.World", p.getLocation().getWorld().getName());
 									if(fGlobalCon.getBoolean("taxes.enabled")) {
-										fTowncon.set("taxes", fGlobalCon.getInt("taxes.price"));	
+										fTowncon.set("taxes", fGlobalCon.getDouble("taxes.price"));	
 									} else {
 										fTowncon.set("taxes", 0);
 									}
