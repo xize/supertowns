@@ -5,6 +5,7 @@ import java.io.File;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.World;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -50,13 +51,13 @@ public class chunkmanager implements Listener {
 		return false;
 	}
 	
-	public boolean checkArea(int x, int z, World w, String townName, String playerName) {
-		if(checkTown(x+1, z, w)) {
+	public boolean checkArea(int x, int z, World w, String townName, CommandSender sender) {
+		if(checkTown((x+1), z, w)) {
 			try {
-				File f = new File(plugin.getDataFolder() + File.separator + "Towns" + townName + ".yml");
+				File f = new File(plugin.getDataFolder() + File.separator + "Towns" + File.separator + townName + ".yml");
 				if(f.exists()) {
 					FileConfiguration con = YamlConfiguration.loadConfiguration(f);
-					if(con.getString("mayor").equalsIgnoreCase("playerName")) {
+					if(con.getString("mayor").equalsIgnoreCase(sender.getName())) {
 						return true;
 					}
 				}
@@ -64,12 +65,12 @@ public class chunkmanager implements Listener {
 				e.printStackTrace();
 			}
 		}
-		if(checkTown(x-1, z, w)) {
+		if(checkTown((x-1), z, w)) {
 			try {
-				File f = new File(plugin.getDataFolder() + File.separator + "Towns" + townName + ".yml");
+				File f = new File(plugin.getDataFolder() + File.separator + "Towns" + File.separator + townName + ".yml");
 				if(f.exists()) {
 					FileConfiguration con = YamlConfiguration.loadConfiguration(f);
-					if(con.getString("mayor").equalsIgnoreCase("playerName")) {
+					if(con.getString("mayor").equalsIgnoreCase(sender.getName())) {
 						return true;
 					}
 				}
@@ -77,12 +78,12 @@ public class chunkmanager implements Listener {
 				e.printStackTrace();
 			}
 		}
-		if(checkTown(x, z+1, w)) {
+		if(checkTown(x, (z+1), w)) {
 			try {
-				File f = new File(plugin.getDataFolder() + File.separator + "Towns" + townName + ".yml");
+				File f = new File(plugin.getDataFolder() + File.separator + "Towns"  + File.separator + townName + ".yml");
 				if(f.exists()) {
 					FileConfiguration con = YamlConfiguration.loadConfiguration(f);
-					if(con.getString("mayor").equalsIgnoreCase("playerName")) {
+					if(con.getString("mayor").equalsIgnoreCase(sender.getName())) {
 						return true;
 					}
 				}
@@ -90,12 +91,12 @@ public class chunkmanager implements Listener {
 				e.printStackTrace();
 			}
 		}
-		if(checkTown(x, z-1, w)) {
+		if(checkTown(x, (z-1), w)) {
 			try {
-				File f = new File(plugin.getDataFolder() + File.separator + "Towns" + townName + ".yml");
+				File f = new File(plugin.getDataFolder() + File.separator + "Towns" + File.separator + townName + ".yml");
 				if(f.exists()) {
 					FileConfiguration con = YamlConfiguration.loadConfiguration(f);
-					if(con.getString("mayor").equalsIgnoreCase("playerName")) {
+					if(con.getString("mayor").equalsIgnoreCase(sender.getName())) {
 						return true;
 					}
 				}

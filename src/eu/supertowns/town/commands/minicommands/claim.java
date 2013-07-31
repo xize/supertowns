@@ -28,13 +28,13 @@ public class claim {
 					if(Bukkit.getPluginManager().isPluginEnabled("Vault") && Bukkit.getPluginManager().isPluginEnabled("iConomy")) {
 						Player p = (Player) sender;
 						try {
-							File playerFile = new File(plugin.getDataFolder() + File.separator + "players" + p.getName() + ".yml");
+							File playerFile = new File(plugin.getDataFolder() + File.separator + "players" + File.separator + p.getName() + ".yml");
 							if(playerFile.exists()) {
 								FileConfiguration playerCon = YamlConfiguration.loadConfiguration(playerFile);
 								if(playerCon.getString("username").equalsIgnoreCase(sender.getName()) && playerCon.getString("type").equalsIgnoreCase("mayor")) {
 									String townName = playerCon.getString("town");
 									chunkmanager chunk = new chunkmanager(plugin);
-									if(chunk.checkArea(p.getLocation().getChunk().getX(), p.getLocation().getChunk().getZ(), p.getWorld(), townName, p.getName())) {
+									if(chunk.checkArea(p.getLocation().getChunk().getX(), p.getLocation().getChunk().getZ(), p.getWorld(), townName, sender)) {
 										File global = new File(plugin.getDataFolder() + File.separator + "config.yml");
 										if(!chunk.checkTown(p.getLocation().getChunk().getX(), p.getLocation().getChunk().getZ(), p.getWorld())) {
 											FileConfiguration globalCfg = YamlConfiguration.loadConfiguration(global);
