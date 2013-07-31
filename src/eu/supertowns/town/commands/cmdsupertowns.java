@@ -8,6 +8,7 @@ import eu.supertowns.town.supertowns;
 import eu.supertowns.town.commands.minicommands.claim;
 import eu.supertowns.town.commands.minicommands.help;
 import eu.supertowns.town.commands.minicommands.newtown;
+import eu.supertowns.town.commands.minicommands.spawn;
 import eu.supertowns.town.permissions.permission;
 
 public class cmdsupertowns {
@@ -62,6 +63,14 @@ public class cmdsupertowns {
 				if(sender.hasPermission("supertowns.command.newtown")) {
 					newtown town = new newtown(plugin);
 					town.createTown(sender, args);	
+				} else {
+					permission perm = new permission();
+					perm.getPermissionError(sender, cmd, args);
+				}
+			} else if(args[0].equalsIgnoreCase("spawn")) {
+				if(sender.hasPermission("supertowns.command.spawn")) {
+					spawn Spawn = new spawn(plugin);
+					Spawn.teleportToTownSpawn(sender, args);
 				} else {
 					permission perm = new permission();
 					perm.getPermissionError(sender, cmd, args);

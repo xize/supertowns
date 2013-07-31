@@ -14,13 +14,17 @@ public class permission {
 				if(args[0].equalsIgnoreCase("help")) {
 					sender.sendMessage(ChatColor.RED + "you are not allowed to use this command: /" + cmd.getName() +" "+ args[0] + "\n" + ChatColor.GRAY + "permission: supertowns.commands.help");
 				}
-			} else if(args.length == 1) {
+			} else if(args.length == 2) {
 				if(args[0].equalsIgnoreCase("new")) {
 					sender.sendMessage(ChatColor.RED + "you are not allowed to use this command: /" + cmd.getName() +" "+ args[0] + "\n" + ChatColor.GRAY + "permission: supertowns.command.newtown");
 				}
 			} else if(args.length == 1) {
 				if(args[0].equalsIgnoreCase("claim")) {
 					sender.sendMessage(ChatColor.RED + "you are not allowed to use this command: /" + cmd.getName() +" "+ args[0] + "\n" + ChatColor.GRAY + "permission: supertowns.command.claim");
+				}
+			} else if(args.length == 2) {
+				if(args[0].equalsIgnoreCase("spawn")) {
+					sender.sendMessage(ChatColor.RED + "you are not allowed to use this command: /" + cmd.getName() +" "+ args[0] + "\n" + ChatColor.GRAY + "permission: supertowns.command.spawn");
 				}
 			}
 		}
