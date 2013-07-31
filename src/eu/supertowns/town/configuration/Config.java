@@ -27,10 +27,10 @@ public class Config {
 				 FileConfiguration con = YamlConfiguration.loadConfiguration(f);
 				 FileConfigurationOptions opt = con.options();
 				 opt.header("Default config for supertowns!");
-				 con.set("townprice", 10000);
-				 con.set("claimprice", 500);
+				 con.set("townprice", Double.valueOf(10000));
+				 con.set("claimprice", Double.valueOf(500));
 				 con.set("taxes.enabled", true);
-				 con.set("taxes.price", 20);
+				 con.set("taxes.price", Double.valueOf(20));
 				 con.set("townProtect.tnt", true);
 				 con.set("townProtect.fire", true);
 				 con.set("townProtect.lava", true);
