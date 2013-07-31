@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import eu.supertowns.town.supertowns;
+import eu.supertowns.town.api.coreApi;
 import eu.supertowns.town.commands.minicommands.claim;
 import eu.supertowns.town.commands.minicommands.help;
 import eu.supertowns.town.commands.minicommands.newtown;
@@ -12,10 +13,11 @@ import eu.supertowns.town.commands.minicommands.spawn;
 import eu.supertowns.town.permissions.permission;
 
 public class cmdsupertowns {
-	
+	coreApi api;
 	supertowns plugin;
-	public cmdsupertowns(supertowns plugin) {
+	public cmdsupertowns(supertowns plugin, coreApi api) {
 		this.plugin = plugin;
+		this.api = api;
 	}
 	
 	public String getPrefix(String header) {
@@ -51,7 +53,7 @@ public class cmdsupertowns {
 				}
 			} else if(args[0].equalsIgnoreCase("claim")) {
 				if(sender.hasPermission("supertowns.command.claim")) {
-					claim Claim = new claim(plugin);
+					claim Claim = new claim(plugin, api);
 					Claim.setClaim(sender, args);
 				} else {
 					permission perm = new permission();
@@ -69,7 +71,7 @@ public class cmdsupertowns {
 				}
 			} else if(args[0].equalsIgnoreCase("spawn")) {
 				if(sender.hasPermission("supertowns.command.spawn")) {
-					spawn Spawn = new spawn(plugin);
+					spawn Spawn = new spawn(plugin, api);
 					Spawn.teleportToTownSpawn(sender, args);
 				} else {
 					permission perm = new permission();

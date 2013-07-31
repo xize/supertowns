@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import eu.supertowns.town.api.coreApi;
 import eu.supertowns.town.commands.commandlist;
 import eu.supertowns.town.commands.commands;
 import eu.supertowns.town.configuration.Config;
@@ -15,10 +16,10 @@ public class supertowns extends JavaPlugin {
 	Logger log = Logger.getLogger("Minecraft");
 	private Config config = new Config(this);
 	private commandlist cmdlist = new commandlist();
-	private commands cmd = new commands(this);
+	private commands cmd = new commands(this, new coreApi(this));
 	
-	private chunkmanager chunkmgr = new chunkmanager(this);
-	private despawnMonsters monsterEvent = new despawnMonsters(this, chunkmgr);
+	private chunkmanager chunkmgr = new chunkmanager(this, new coreApi(this));
+	private despawnMonsters monsterEvent = new despawnMonsters(this, new coreApi(this));
 	
 	public void logger(String string, logType logtype) {
 		String prefix = "[SuperTowns] ";

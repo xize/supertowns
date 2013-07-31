@@ -13,13 +13,14 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import eu.supertowns.town.supertowns;
+import eu.supertowns.town.api.coreApi;
 
 public class despawnMonsters implements Listener {
 	supertowns plugin;
-	chunkmanager chunks;
-	public despawnMonsters(supertowns plugin, chunkmanager chunks) { 
+	coreApi api;
+	public despawnMonsters(supertowns plugin, coreApi api) { 
 		this.plugin = plugin;
-		this.chunks = chunks;
+		this.api = api;
 	}
 	
 	@EventHandler
@@ -27,7 +28,7 @@ public class despawnMonsters implements Listener {
 		if(e.getEntity() instanceof Monster) {
 			int x = e.getEntity().getLocation().getChunk().getX();
 			int z = e.getEntity().getLocation().getChunk().getZ();
-			if(chunks.checkTown(x, z, e.getLocation().getWorld())) {
+			if(api.checkTown(x, z, e.getLocation().getWorld())) {
 				e.getEntity().remove();
 				e.setCancelled(true);
 			}	
@@ -37,7 +38,7 @@ public class despawnMonsters implements Listener {
 	@EventHandler
 	public void DisableArrow(EntityDamageByEntityEvent e) {
 		if(e.getDamager() instanceof Arrow) {
-			if(chunks.checkTown(e.getDamager().getLocation().getChunk().getX(), e.getDamager().getLocation().getChunk().getZ(), e.getDamager().getWorld())) {
+			if(api.checkTown(e.getDamager().getLocation().getChunk().getX(), e.getDamager().getLocation().getChunk().getZ(), e.getDamager().getWorld())) {
 				Arrow arrow = (Arrow) e.getDamager();
 				if(arrow.getShooter() instanceof Skeleton) {
 					e.setCancelled(true);
@@ -54,7 +55,7 @@ public class despawnMonsters implements Listener {
 				for(Player p : Bukkit.getOnlinePlayers()) {
 					for(Entity entity : p.getNearbyEntities(100, 128, 100)) {
 						if(entity instanceof Monster || entity instanceof Slime) {
-							if(chunks.checkTown(entity.getLocation().getChunk().getX(), entity.getLocation().getChunk().getZ(), entity.getLocation().getWorld())) {
+							if(api.checkTown(entity.getLocation().getChunk().getX(), entity.getLocation().getChunk().getZ(), entity.getLocation().getWorld())) {
 								entity.remove();
 							}
 						}

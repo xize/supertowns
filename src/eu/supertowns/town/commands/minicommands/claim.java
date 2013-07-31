@@ -13,12 +13,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 import eu.supertowns.town.supertowns;
-import eu.supertowns.town.events.chunkmanager;
+import eu.supertowns.town.api.coreApi;
 
 public class claim {
 	supertowns plugin;
-	public claim(supertowns plugin) {
+	coreApi api;
+	public claim(supertowns plugin, coreApi api) {
 		this.plugin = plugin;
+		this.api = api;
 	}
 
 	public void setClaim(CommandSender sender, String[] args) {
@@ -33,10 +35,9 @@ public class claim {
 								FileConfiguration playerCon = YamlConfiguration.loadConfiguration(playerFile);
 								if(playerCon.getString("username").equalsIgnoreCase(sender.getName()) && playerCon.getString("type").equalsIgnoreCase("mayor")) {
 									String townName = playerCon.getString("town");
-									chunkmanager chunk = new chunkmanager(plugin);
-									if(chunk.checkArea(p.getLocation().getChunk().getX(), p.getLocation().getChunk().getZ(), p.getWorld(), townName, sender)) {
+									if(api.checkTownAtNearbyChunks(p.getLocation().getChunk().getX(), p.getLocation().getChunk().getZ(), p.getWorld(), townName, sender)) {
 										File global = new File(plugin.getDataFolder() + File.separator + "config.yml");
-										if(!chunk.checkTown(p.getLocation().getChunk().getX(), p.getLocation().getChunk().getZ(), p.getWorld())) {
+										if(!api.checkTown(p.getLocation().getChunk().getX(), p.getLocation().getChunk().getZ(), p.getWorld())) {
 											FileConfiguration globalCfg = YamlConfiguration.loadConfiguration(global);
 											Double costs = globalCfg.getDouble("claimprice");
 											RegisteredServiceProvider<Economy> economyProvider = Bukkit.getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
