@@ -76,6 +76,8 @@ public class newtown {
 									fTowncon.set("townSpawnPoint.Z", p.getLocation().getZ());
 									fTowncon.set("townSpawnPoint.Yaw", p.getLocation().getYaw());
 									fTowncon.set("townSpawnPoint.World", p.getLocation().getWorld().getName());
+									fTowncon.set("townSpawnPoint.status", "public");
+									fTowncon.set("townSpawnPoint.touristPrice", Double.valueOf("10.00"));
 									if(fGlobalCon.getBoolean("taxes.enabled")) {
 										fTowncon.set("taxes", fGlobalCon.getDouble("taxes.price"));	
 									} else {
