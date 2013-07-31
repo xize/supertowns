@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import eu.supertowns.town.supertowns;
+import eu.supertowns.town.commands.minicommands.claim;
 import eu.supertowns.town.commands.minicommands.help;
 import eu.supertowns.town.commands.minicommands.newtown;
 import eu.supertowns.town.permissions.permission;
@@ -43,6 +44,14 @@ public class cmdsupertowns {
 				if(sender.hasPermission("supertowns.command.help")) {
 					help Help = new help(this);
 					Help.showHelp(sender);
+				} else {
+					permission perm = new permission();
+					perm.getPermissionError(sender, cmd, args);
+				}
+			} else if(args[0].equalsIgnoreCase("claim")) {
+				if(sender.hasPermission("supertowns.command.claim")) {
+					claim Claim = new claim(plugin);
+					Claim.setClaim(sender, args);
 				} else {
 					permission perm = new permission();
 					perm.getPermissionError(sender, cmd, args);
