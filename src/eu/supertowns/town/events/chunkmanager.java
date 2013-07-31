@@ -50,6 +50,59 @@ public class chunkmanager implements Listener {
 		return false;
 	}
 	
+	public boolean checkArea(int x, int z, World w, String townName, String playerName) {
+		if(checkTown(x+1, z, w)) {
+			try {
+				File f = new File(plugin.getDataFolder() + File.separator + "Towns" + townName + ".yml");
+				if(f.exists()) {
+					FileConfiguration con = YamlConfiguration.loadConfiguration(f);
+					if(con.getString("mayor").equalsIgnoreCase("playerName")) {
+						return true;
+					}
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		} else if(checkTown(x-1, z, w)) {
+			try {
+				File f = new File(plugin.getDataFolder() + File.separator + "Towns" + townName + ".yml");
+				if(f.exists()) {
+					FileConfiguration con = YamlConfiguration.loadConfiguration(f);
+					if(con.getString("mayor").equalsIgnoreCase("playerName")) {
+						return true;
+					}
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		} else if(checkTown(x, z+1, w)) {
+			try {
+				File f = new File(plugin.getDataFolder() + File.separator + "Towns" + townName + ".yml");
+				if(f.exists()) {
+					FileConfiguration con = YamlConfiguration.loadConfiguration(f);
+					if(con.getString("mayor").equalsIgnoreCase("playerName")) {
+						return true;
+					}
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		} else if(checkTown(x, z-1, w)) {
+			try {
+				File f = new File(plugin.getDataFolder() + File.separator + "Towns" + townName + ".yml");
+				if(f.exists()) {
+					FileConfiguration con = YamlConfiguration.loadConfiguration(f);
+					if(con.getString("mayor").equalsIgnoreCase("playerName")) {
+						return true;
+					}
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+	
 	public boolean checkTown(int x, int z, World world) {
 		try {
 			File f = new File(plugin.getDataFolder() + File.separator + "TownBlocks" + File.separator + world.getName() + "_x" + x + "_z"+z + ".yml");
