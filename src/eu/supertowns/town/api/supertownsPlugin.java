@@ -27,4 +27,11 @@ public class supertownsPlugin extends JavaPlugin {
 		}
 		return false;
 	}
+	
+	public boolean isPlayerNearbyTown(String town, Player p) {
+		if(chunk.checkArea(p.getLocation().getChunk().getX(), p.getLocation().getChunk().getZ(), p.getWorld(), town, p)) {
+			return true;
+		}
+		return false;
+	}
 }
