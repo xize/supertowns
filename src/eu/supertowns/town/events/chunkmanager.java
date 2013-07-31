@@ -63,7 +63,8 @@ public class chunkmanager implements Listener {
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
-		} else if(checkTown(x-1, z, w)) {
+		}
+		if(checkTown(x-1, z, w)) {
 			try {
 				File f = new File(plugin.getDataFolder() + File.separator + "Towns" + townName + ".yml");
 				if(f.exists()) {
@@ -75,7 +76,8 @@ public class chunkmanager implements Listener {
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
-		} else if(checkTown(x, z+1, w)) {
+		}
+		if(checkTown(x, z+1, w)) {
 			try {
 				File f = new File(plugin.getDataFolder() + File.separator + "Towns" + townName + ".yml");
 				if(f.exists()) {
@@ -87,7 +89,8 @@ public class chunkmanager implements Listener {
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
-		} else if(checkTown(x, z-1, w)) {
+		}
+		if(checkTown(x, z-1, w)) {
 			try {
 				File f = new File(plugin.getDataFolder() + File.separator + "Towns" + townName + ".yml");
 				if(f.exists()) {
