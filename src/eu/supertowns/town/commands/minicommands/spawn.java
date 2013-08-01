@@ -23,19 +23,37 @@ public class spawn {
 		this.plugin = plugin;
 		this.api = api;
 	}
-	
+
 	public void teleportToTownSpawn(CommandSender sender, String[] args) {
-		if(args.length == 2) {
-			if(args[0].equalsIgnoreCase("spawn")) {
-				if(sender instanceof Player) {
-					Player p = (Player) sender;
+		if(sender instanceof Player) {
+			Player p = (Player) sender;
+			if(args.length == 1) {
+				if(args[0].equalsIgnoreCase("spawn")) {
+					if(api.getTown(p).length() != 0) {
+						String townName = api.getTown(p);
+						try {
+							File f = new File(plugin.getDataFolder() + File.separator + "Towns" + File.separator + townName + ".yml");
+							if(f.exists()) {
+								FileConfiguration con = YamlConfiguration.loadConfiguration(f);
+								sender.sendMessage(ChatColor.GREEN + "teleporting to your town!");
+								api.safeTeleport(p, con);
+							} else {
+								sender.sendMessage(ChatColor.RED + "something has been misconfigured please ask the owner if he wants to check the console logs");
+							}
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
+					} else {
+						sender.sendMessage(ChatColor.RED + "you don't belong to any town!");
+					}
+				}
+			} else if(args.length == 2) {
+				if(args[0].equalsIgnoreCase("spawn")) {
 					try {
 						File f = new File(plugin.getDataFolder() + File.separator + "Towns" + File.separator + args[1] + ".yml");
 						if(f.exists()) {
 							FileConfiguration con = YamlConfiguration.loadConfiguration(f);
-							plugin.logger("before enum", logType.info);
 							if(con.getString("townSpawnPoint.status").equalsIgnoreCase("public")) {
-								plugin.logger("near enum", logType.info);
 								if(api.isMember(sender, args[1])) {
 									sender.sendMessage(ChatColor.GREEN + "teleporting to town " + con.getString("TownName"));
 									api.safeTeleport(p, con);
@@ -71,11 +89,11 @@ public class spawn {
 					} catch(Exception e) {
 						e.printStackTrace();
 					}
-				} else {
-					sender.sendMessage(ChatColor.RED + "a console cannot teleport to a town spawn");
 				}
 			}
+		} else {
+			sender.sendMessage(ChatColor.RED + "a console cannot teleport to a town spawn");
 		}
-	}
+	} 
 
 }

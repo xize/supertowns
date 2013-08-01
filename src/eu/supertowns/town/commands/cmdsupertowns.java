@@ -68,6 +68,14 @@ public class cmdsupertowns {
 					permission perm = new permission();
 					perm.getPermissionError(sender, cmd, args);
 				}
+			} else if(args[0].equalsIgnoreCase("spawn")) {
+				if(sender.hasPermission("supertowns.command.spawn")) {
+					spawn Spawn = new spawn(plugin, api);
+					Spawn.teleportToTownSpawn(sender, args);
+				} else {
+					permission perm = new permission();
+					perm.getPermissionError(sender, cmd, args);
+				}
 			}
 		} else if(args.length == 2) {
 			if(args[0].equalsIgnoreCase("new")) {
