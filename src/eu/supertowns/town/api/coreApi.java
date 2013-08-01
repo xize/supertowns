@@ -20,6 +20,37 @@ public class coreApi {
 		this.plugin = plugin;
 	}
 	
+	public String getTown(Player p) {
+		try {
+			File f = new File(plugin.getDataFolder() + File.separator + "players" + File.separator + p.getName() + ".yml");
+			if(f.exists()) {
+				FileConfiguration con = YamlConfiguration.loadConfiguration(f);
+				String town = con.getString("town");
+				return town;
+			} else {
+				return null;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String getTownNameOnLocation(int x, int z, World w) {
+		try {
+			File f = new File(plugin.getDataFolder() + File.separator + "TownBlocks" + File.separator + w.getName() + "_x" + x + "_z"+z + ".yml");
+			if(f.exists()) {
+				FileConfiguration con = YamlConfiguration.loadConfiguration(f);
+				return con.getString("TownName");
+			} else {
+				return null;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public boolean isResident(Player p, String town) {
 		try {
 			File f = new File(plugin.getDataFolder() + File.separator + "players" + File.separator + p.getName() + ".yml");
