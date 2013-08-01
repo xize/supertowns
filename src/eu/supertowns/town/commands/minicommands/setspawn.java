@@ -24,8 +24,7 @@ public class setspawn {
 			if(args[0].equalsIgnoreCase("setspawn")) {
 				if(sender instanceof Player) {
 					Player p = (Player) sender;
-					String town = api.getTown(p);
-					if(town != "null") {
+					if(api.isPlayerInTown(p)) {
 						if(api.isMayor(p, api.getTownNameOnLocation(p.getLocation().getChunk().getX(), p.getLocation().getChunk().getZ(), p.getWorld()))) {
 							String townName = api.getTownNameOnLocation(p.getLocation().getChunk().getX(), p.getLocation().getChunk().getZ(), p.getWorld());
 							try {
