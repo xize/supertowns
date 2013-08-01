@@ -23,7 +23,7 @@ public class chunkmanager implements Listener {
 		if(chunkFrom.getX() != chunkTo.getX() || chunkFrom.getZ() != chunkTo.getZ()) {
 			if(api.checkTown(chunkTo.getX(), chunkTo.getZ(), chunkTo.getWorld()) && !api.checkTown(chunkFrom.getX(), chunkFrom.getZ(), chunkFrom.getWorld())) {
 				api.startTownJoinMessage(e.getPlayer(), chunkTo.getX(), chunkTo.getZ(), chunkTo.getWorld());
-			} else if(api.checkTown(chunkTo.getX(), chunkTo.getZ(), chunkTo.getWorld()) && api.checkTown(chunkFrom.getX(), chunkFrom.getZ(), chunkFrom.getWorld())) {
+			} else if(!api.checkTown(chunkTo.getX(), chunkTo.getZ(), chunkTo.getWorld()) && api.checkTown(chunkFrom.getX(), chunkFrom.getZ(), chunkFrom.getWorld())) {
 				api.startTownLeaveMessage(e.getPlayer(), chunkFrom.getX(), chunkFrom.getZ(), chunkTo.getWorld());
 			}
 		}
