@@ -18,6 +18,8 @@ public class handler {
 		getListener(new chunkmanager(plugin, api));
 		getListener(new despawnMonsters(plugin, api));
 		getListener(new pvpCheck(plugin, api));
+		getListener(new buildCheck(plugin, api));
+		getListener(new mobProtectionCheck(plugin, api));
 		startSpawnScheduler(new despawnMonsters(plugin, api));
 	}
 	
