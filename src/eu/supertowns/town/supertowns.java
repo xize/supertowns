@@ -8,8 +8,7 @@ import eu.supertowns.town.api.coreApi;
 import eu.supertowns.town.commands.commandlist;
 import eu.supertowns.town.commands.commands;
 import eu.supertowns.town.configuration.Config;
-import eu.supertowns.town.events.chunkmanager;
-import eu.supertowns.town.events.despawnMonsters;
+import eu.supertowns.town.events.handler;
 
 public class supertowns extends JavaPlugin {
 	
@@ -17,9 +16,7 @@ public class supertowns extends JavaPlugin {
 	private Config config = new Config(this);
 	private commandlist cmdlist = new commandlist();
 	private commands cmd = new commands(this, new coreApi(this));
-	
-	private chunkmanager chunkmgr = new chunkmanager(this, new coreApi(this));
-	private despawnMonsters monsterEvent = new despawnMonsters(this, new coreApi(this));
+	private handler eventHandler = new handler(this, new coreApi(this));
 	
 	public void logger(String string, logType logtype) {
 		String prefix = "[SuperTowns] ";
@@ -36,10 +33,7 @@ public class supertowns extends JavaPlugin {
 		for(String command : cmdlist.getCommandList) {
 			getCommand(command).setExecutor(cmd);
 		}
-		this.getServer().getPluginManager().registerEvents(chunkmgr, this);
-		this.getServer().getPluginManager().registerEvents(monsterEvent, this);
-		monsterEvent.checkTask();
-		
+		eventHandler.launch();
 	}
 	
 	public void onDisable() {

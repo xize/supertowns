@@ -1,6 +1,10 @@
 package eu.supertowns.town.events;
 
+import java.io.File;
+
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
@@ -29,8 +33,21 @@ public class despawnMonsters implements Listener {
 			int x = e.getEntity().getLocation().getChunk().getX();
 			int z = e.getEntity().getLocation().getChunk().getZ();
 			if(api.checkTown(x, z, e.getLocation().getWorld())) {
-				e.getEntity().remove();
-				e.setCancelled(true);
+				String townName = api.getTownNameOnLocation(x, z, e.getEntity().getWorld());
+				try {
+					File f = new File(plugin.getDataFolder() + File.separator + "Towns" + File.separator + townName + ".yml");
+					if(f.exists()) {
+						FileConfiguration con = YamlConfiguration.loadConfiguration(f);
+						if(con.getString("townFlag.spawnHostileMobs").equalsIgnoreCase("deny")) {
+							e.getEntity().remove();
+							e.setCancelled(true);	
+						}
+					} else {
+						return;
+					}
+				} catch(Exception r) {
+					r.printStackTrace();
+				}
 			}	
 		}
 	}
@@ -41,7 +58,21 @@ public class despawnMonsters implements Listener {
 			if(api.checkTown(e.getDamager().getLocation().getChunk().getX(), e.getDamager().getLocation().getChunk().getZ(), e.getDamager().getWorld())) {
 				Arrow arrow = (Arrow) e.getDamager();
 				if(arrow.getShooter() instanceof Skeleton) {
-					e.setCancelled(true);
+					String townName = api.getTownNameOnLocation(e.getDamager().getLocation().getChunk().getX(), e.getDamager().getLocation().getChunk().getZ(), e.getDamager().getWorld());
+					try {
+						File f = new File(plugin.getDataFolder() + File.separator + "Towns" + File.separator + townName + ".yml");
+						if(f.exists()) {
+							FileConfiguration con = YamlConfiguration.loadConfiguration(f);
+							if(con.getString("townFlag.spawnHostileMobs").equalsIgnoreCase("deny")) {
+								e.getEntity().remove();
+								e.setCancelled(true);	
+							}
+						} else {
+							return;
+						}
+					} catch(Exception r) {
+						r.printStackTrace();
+					}
 				}
 			}
 		}
@@ -56,7 +87,20 @@ public class despawnMonsters implements Listener {
 					for(Entity entity : p.getNearbyEntities(100, 128, 100)) {
 						if(entity instanceof Monster || entity instanceof Slime) {
 							if(api.checkTown(entity.getLocation().getChunk().getX(), entity.getLocation().getChunk().getZ(), entity.getLocation().getWorld())) {
-								entity.remove();
+								String townName = api.getTownNameOnLocation(entity.getLocation().getChunk().getX(), entity.getLocation().getChunk().getZ(), entity.getWorld());
+								try {
+									File f = new File(plugin.getDataFolder() + File.separator + "Towns" + File.separator + townName + ".yml");
+									if(f.exists()) {
+										FileConfiguration con = YamlConfiguration.loadConfiguration(f);
+										if(con.getString("townFlag.spawnHostileMobs").equalsIgnoreCase("deny")) {
+											entity.remove();
+										}
+									} else {
+										return;
+									}
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
 							}
 						}
 					}

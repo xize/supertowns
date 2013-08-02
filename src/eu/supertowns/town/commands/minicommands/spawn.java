@@ -80,7 +80,7 @@ public class spawn {
 										}
 									}
 								}
-							} else if(con.getString("townSpawnPoint.status").equalsIgnoreCase("private")) {
+							} else if (con.getString("townSpawnPoint.status").equalsIgnoreCase("private")) {
 								sender.sendMessage(ChatColor.RED + "this town has privated his doors!");
 							}
 						} else {
