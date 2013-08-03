@@ -19,12 +19,9 @@ public class buildCheck implements Listener {
 	
 	@EventHandler
 	public void blockDestroyCheck(BlockBreakEvent e) {
-		if(api.isPlayerInTown(e.getPlayer())) {
+		if(api.checkTown(e.getBlock().getChunk().getX(), e.getBlock().getChunk().getZ(), e.getBlock().getWorld())) {
 			String townName = api.getTownNameOnLocation(e.getBlock().getChunk().getX(), e.getBlock().getChunk().getZ(), e.getBlock().getWorld());
-			if(townName.equalsIgnoreCase("null")) {
-				return;
-			}
-			if(!api.isMember(e.getPlayer(), townName) || !api.isMayor(e.getPlayer(), townName)) {
+			if(!api.isMember(e.getPlayer(), townName) && townName != null && !townName.isEmpty()) {
 				e.getPlayer().sendMessage(ChatColor.RED + "you are permitted to destroy blocks in the town of " + ChatColor.GOLD + townName);
 				e.setCancelled(true);
 			}
@@ -33,12 +30,9 @@ public class buildCheck implements Listener {
 	
 	@EventHandler
 	public void blockDestroyCheck(BlockPlaceEvent e) {
-		if(api.isPlayerInTown(e.getPlayer())) {
+		if(api.checkTown(e.getBlock().getChunk().getX(), e.getBlock().getChunk().getZ(), e.getBlock().getWorld())) {
 			String townName = api.getTownNameOnLocation(e.getBlock().getChunk().getX(), e.getBlock().getChunk().getZ(), e.getBlock().getWorld());
-			if(townName.equalsIgnoreCase("null")) {
-				return;
-			}
-			if(!api.isMember(e.getPlayer(), townName) || !api.isMayor(e.getPlayer(), townName)) {
+			if(!api.isMember(e.getPlayer(), townName) && townName != null && !townName.isEmpty()) {
 				e.getPlayer().sendMessage(ChatColor.RED + "you are permitted to build in the town of " + ChatColor.GOLD + townName);
 				e.setCancelled(true);
 			}
