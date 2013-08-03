@@ -8,7 +8,7 @@ import eu.supertowns.town.api.coreApi;
 import eu.supertowns.town.commands.commandlist;
 import eu.supertowns.town.commands.commands;
 import eu.supertowns.town.configuration.Config;
-import eu.supertowns.town.events.handler;
+import eu.supertowns.town.events.towns.townHandler;
 
 public class supertowns extends JavaPlugin {
 	
@@ -16,7 +16,7 @@ public class supertowns extends JavaPlugin {
 	private Config config = new Config(this);
 	private commandlist cmdlist = new commandlist();
 	private commands cmd = new commands(this, new coreApi(this));
-	private handler eventHandler = new handler(this, new coreApi(this));
+	private townHandler eventHandler = new townHandler(this, new coreApi(this));
 	
 	public void logger(String string, logType logtype) {
 		String prefix = "[SuperTowns] ";

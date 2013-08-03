@@ -1,4 +1,4 @@
-package eu.supertowns.town.events;
+package eu.supertowns.town.events.towns;
 
 import org.bukkit.Chunk;
 import org.bukkit.event.EventHandler;

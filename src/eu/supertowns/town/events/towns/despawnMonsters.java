@@ -1,4 +1,4 @@
-package eu.supertowns.town.events;
+package eu.supertowns.town.events.towns;
 
 import java.io.File;
 

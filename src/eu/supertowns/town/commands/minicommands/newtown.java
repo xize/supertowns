@@ -70,7 +70,6 @@ public class newtown {
 									fTowncon.set("townFlag.tnt", "deny");
 									fTowncon.set("townFlag.setMobProtection", "allow");
 									fTowncon.set("townFlag.spawnHostileMobs", "deny");
-									fTowncon.set("townFlag.teleportation", "allow");
 									fTowncon.set("townSpawnPoint.X", p.getLocation().getX());
 									fTowncon.set("townSpawnPoint.Y", p.getLocation().getY());
 									fTowncon.set("townSpawnPoint.Z", p.getLocation().getZ());
