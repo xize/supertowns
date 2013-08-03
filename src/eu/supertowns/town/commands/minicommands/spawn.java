@@ -54,7 +54,7 @@ public class spawn {
 						if(f.exists()) {
 							FileConfiguration con = YamlConfiguration.loadConfiguration(f);
 							if(con.getString("townSpawnPoint.status").equalsIgnoreCase("public")) {
-								if(api.isMember(sender, args[1])) {
+								if(api.isMember(p, args[1])) {
 									sender.sendMessage(ChatColor.GREEN + "teleporting to town " + con.getString("TownName"));
 									api.safeTeleport(p, con);
 								} else {
