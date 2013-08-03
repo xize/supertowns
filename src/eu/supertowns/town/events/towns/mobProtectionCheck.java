@@ -31,17 +31,19 @@ public class mobProtectionCheck implements Listener {
 				Player damager = (Player) e.getDamager();
 				if(api.isEntityInTown(e.getEntity())) {
 					String townName = api.getTownNameOnLocation(e.getEntity().getLocation().getChunk().getX(), e.getEntity().getLocation().getChunk().getZ(), e.getEntity().getWorld());
-					try {
-						File f = new File(plugin.getDataFolder() + File.separator + "Towns" + File.separator + townName + ".yml");
-						if(f.exists()) {
-							FileConfiguration con = YamlConfiguration.loadConfiguration(f);
-							if(con.getString("townFlag.setMobProtection").equalsIgnoreCase("allow")) {
-								damager.sendMessage(ChatColor.RED + "you are not allowed to damage this mob " + ChatColor.GOLD + e.getEntity().getType().name().toLowerCase().replace("_", " ") + ChatColor.RED + " in the town " + ChatColor.GOLD + townName);
-								e.setCancelled(true);
+					if(!api.isMember(damager, townName)) {
+						try {
+							File f = new File(plugin.getDataFolder() + File.separator + "Towns" + File.separator + townName + ".yml");
+							if(f.exists()) {
+								FileConfiguration con = YamlConfiguration.loadConfiguration(f);
+								if(con.getString("townFlag.setMobProtection").equalsIgnoreCase("allow")) {
+									damager.sendMessage(ChatColor.RED + "you are not allowed to damage this mob " + ChatColor.GOLD + e.getEntity().getType().name().toLowerCase().replace("_", " ") + ChatColor.RED + " in the town " + ChatColor.GOLD + townName);
+									e.setCancelled(true);
+								}
 							}
+						} catch(Exception r) {
+							r.printStackTrace();
 						}
-					} catch(Exception r) {
-						r.printStackTrace();
 					}
 				}
 			} else if(e.getDamager() instanceof Arrow) {
@@ -50,18 +52,20 @@ public class mobProtectionCheck implements Listener {
 					Player damager = (Player) arDamager.getShooter();
 					if(api.isEntityInTown(e.getEntity())) {
 						String townName = api.getTownNameOnLocation(e.getEntity().getLocation().getChunk().getX(), e.getEntity().getLocation().getChunk().getZ(), e.getEntity().getWorld());
-						try {
-							File f = new File(plugin.getDataFolder() + File.separator + "Towns" + File.separator + townName + ".yml");
-							if(f.exists()) {
-								FileConfiguration con = YamlConfiguration.loadConfiguration(f);
-								if(con.getString("townFlag.setMobProtection").equalsIgnoreCase("allow")) {
-									damager.sendMessage(ChatColor.RED + "you are not allowed to damage this mob " + ChatColor.GOLD + e.getEntity().getType().name().toLowerCase().replace("_", " ") + ChatColor.RED + " in the town " + ChatColor.GOLD + townName);
-									arDamager.remove();
-									e.setCancelled(true);
+						if(api.isMember(damager, townName)) {
+							try {
+								File f = new File(plugin.getDataFolder() + File.separator + "Towns" + File.separator + townName + ".yml");
+								if(f.exists()) {
+									FileConfiguration con = YamlConfiguration.loadConfiguration(f);
+									if(con.getString("townFlag.setMobProtection").equalsIgnoreCase("allow")) {
+										damager.sendMessage(ChatColor.RED + "you are not allowed to damage this mob " + ChatColor.GOLD + e.getEntity().getType().name().toLowerCase().replace("_", " ") + ChatColor.RED + " in the town " + ChatColor.GOLD + townName);
+										arDamager.remove();
+										e.setCancelled(true);
+									}
 								}
+							} catch(Exception r) {
+								r.printStackTrace();
 							}
-						} catch(Exception r) {
-							r.printStackTrace();
 						}
 					}
 				}
