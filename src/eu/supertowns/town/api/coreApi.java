@@ -234,9 +234,9 @@ public class coreApi {
 		return;
 	}
 	
-	public boolean isMember(CommandSender sender, String town) {
+	public boolean isMember(Player p, String town) {
 		try {
-			File f = new File(plugin.getDataFolder() + File.separator + "players" + File.separator + sender.getName() + ".yml");
+			File f = new File(plugin.getDataFolder() + File.separator + "players" + File.separator + p.getName() + ".yml");
 			if(f.exists()) {
 				FileConfiguration con = YamlConfiguration.loadConfiguration(f);
 				if(con.getString("town").equalsIgnoreCase(town)) {
