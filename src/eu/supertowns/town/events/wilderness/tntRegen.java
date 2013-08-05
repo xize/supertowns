@@ -13,10 +13,12 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.material.MaterialData;
 
+import eu.supertowns.town.logType;
 import eu.supertowns.town.supertowns;
 import eu.supertowns.town.api.coreApi;
 
@@ -71,13 +73,44 @@ public class tntRegen implements Listener {
 	}
 
 	@EventHandler
-	public void checkonFallingBlocks(EntityChangeBlockEvent e) {
-		if(e.getEntity().getType() == EntityType.FALLING_BLOCK) {
+	public void spreads(BlockFromToEvent e) {
+		if(e.getBlock().getType() == Material.STATIONARY_WATER || e.getBlock().getType() == Material.STATIONARY_LAVA) {
 			Iterator<Entry<Location, MaterialData>> it = list.entrySet().iterator();
-			if(it.hasNext()) {
-				e.setCancelled(true);
+			while(it.hasNext()) {
+				Map.Entry<Location, MaterialData> its = (Map.Entry<Location, MaterialData>) it.next();
+				Location loca = (Location) its.getKey();
+				Block block = loca.getBlock();
+				if(e.getBlock().equals(block)) {
+					if(block.getType() == Material.STATIONARY_WATER || block.getType() == Material.STATIONARY_LAVA || block.getType() == Material.WATER || block.getType() == Material.LAVA) {
+						e.setCancelled(true);	
+					}
+				}
 			}
-			//it.remove();
+		}
+	}
+
+	@EventHandler
+	public void checkonFallingBlocks(EntityChangeBlockEvent e) {
+		if(e.getBlock().getType() == Material.SAND || e.getBlock().getType() == Material.GRAVEL || e.getBlock().getType() == Material.ANVIL) {
+			Iterator<Entry<Location, MaterialData>> it = list.entrySet().iterator();
+			while(it.hasNext()) {
+				Map.Entry<Location, MaterialData> its = (Map.Entry<Location, MaterialData>) it.next();
+				Location loca = (Location) its.getKey();
+				Block block = loca.getBlock();
+				double listx = (double) block.getLocation().getX();
+				double listy = (double) block.getLocation().getY();
+				double listz = (double) block.getLocation().getZ();
+				double blockx = (double) e.getBlock().getLocation().getX();
+				double blocky = (double) e.getBlock().getLocation().getY();
+				double blockz = (double) e.getBlock().getLocation().getZ();
+				plugin.logger("eventBlock(x:" + blockx + " y:" + blocky + " z:" + blockz + ")", logType.info);
+				plugin.logger("listBlock(x:" + listx + " y:" + listy + " z:" + listz + ")", logType.info);
+				if(e.getBlock().equals(block)) {
+					if(block.getType() == Material.SAND || block.getType() == Material.GRAVEL || block.getType() == Material.ANVIL) {
+						e.setCancelled(true);	
+					}
+				}
+			}
 		}
 	}
 }
