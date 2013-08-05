@@ -5,6 +5,7 @@ import org.bukkit.event.Listener;
 
 import eu.supertowns.town.supertowns;
 import eu.supertowns.town.api.coreApi;
+import eu.supertowns.town.events.wilderness.tntRegen;
 
 public class townHandler {
 	supertowns plugin;
@@ -21,6 +22,8 @@ public class townHandler {
 		getListener(new buildCheck(plugin, api));
 		getListener(new mobProtectionCheck(plugin, api));
 		getListener(new tntCheck(plugin, api));
+		getListener(new tntRegen(plugin, api));
+		startTNT(new tntRegen(plugin, api));
 		startSpawnScheduler(new despawnMonsters(plugin, api));
 	}
 	
@@ -30,6 +33,10 @@ public class townHandler {
 	
 	public void startSpawnScheduler(despawnMonsters e) {
 		e.checkTask();
+	}
+	
+	public void startTNT(tntRegen e) {
+		e.startTntRegen();
 	}
 
 }
