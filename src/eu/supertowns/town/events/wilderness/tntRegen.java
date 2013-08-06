@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -64,6 +65,7 @@ public class tntRegen implements Listener {
 					MaterialData blockType = (MaterialData) its.getValue();
 					loca.getBlock().setTypeId(blockType.getItemTypeId());
 					loca.getBlock().setData(blockType.getData());
+					loca.getBlock().getWorld().playEffect(loca.getBlock().getLocation(), Effect.STEP_SOUND, loca.getBlock().getType());
 					it.remove();
 					list.remove(loca);
 				}
@@ -97,7 +99,7 @@ public class tntRegen implements Listener {
 				Map.Entry<Location, MaterialData> its = (Map.Entry<Location, MaterialData>) it.next();
 				Location loca = (Location) its.getKey();
 				Block block = loca.getBlock();
-				double listx = (double) block.getLocation().getX();
+				/*double listx = (double) block.getLocation().getX();
 				double listy = (double) block.getLocation().getY();
 				double listz = (double) block.getLocation().getZ();
 				double blockx = (double) e.getBlock().getLocation().getX();
@@ -105,10 +107,15 @@ public class tntRegen implements Listener {
 				double blockz = (double) e.getBlock().getLocation().getZ();
 				plugin.logger("eventBlock(x:" + blockx + " y:" + blocky + " z:" + blockz + ")", logType.info);
 				plugin.logger("listBlock(x:" + listx + " y:" + listy + " z:" + listz + ")", logType.info);
+				 */
 				if(e.getBlock().equals(block)) {
 					if(block.getType() == Material.SAND || block.getType() == Material.GRAVEL || block.getType() == Material.ANVIL) {
 						e.setCancelled(true);	
+					} else {
+						e.setCancelled(true);
 					}
+				} else {
+					e.setCancelled(true);
 				}
 			}
 		}
