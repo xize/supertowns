@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFromToEvent;
@@ -19,34 +19,33 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.material.MaterialData;
 
-import eu.supertowns.town.logType;
 import eu.supertowns.town.supertowns;
 import eu.supertowns.town.api.coreApi;
 
 public class tntRegen implements Listener {
-
 	supertowns plugin;
 	coreApi api;
 	public tntRegen(supertowns plugin, coreApi api) {
 		this.plugin = plugin;
 		this.api = api;
 	}
-
-	public int i;
-
+	
 	public static HashMap<Location, MaterialData> list = new HashMap<Location, MaterialData>();
+	
+	Logger log = Logger.getLogger("Minecraft");
 
 	@EventHandler
 	public void doTntRegen(EntityExplodeEvent e) {
 		Collections.reverse(e.blockList());
 		for(Block block : e.blockList())  {
-			if(!api.checkTown(block.getChunk().getX(), block.getChunk().getZ(), block.getWorld())) {
-				if(block.getType() == Material.AIR || block.getType() == Material.TNT) {
+				if(block.getType() == Material.AIR || block.getType() == Material.VINE || block.getType() == Material.LADDER || block.getType() == Material.MINECART || block.getType() == Material.FURNACE || block.getType() == Material.CHEST) {
+					e.setCancelled(true);
+				} else if(block.getType() == Material.TNT) {
+					
 				} else {
 					list.put(block.getLocation(), block.getState().getData());
 					block.setType(Material.AIR);
 				}
-			}
 		}
 		//plugin.logger("this is the ArrayList " + list.toString(), logType.info);
 	}
@@ -120,4 +119,5 @@ public class tntRegen implements Listener {
 			}
 		}
 	}
+
 }
