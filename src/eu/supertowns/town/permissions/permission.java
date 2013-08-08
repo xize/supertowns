@@ -27,7 +27,7 @@ public class permission {
 					sender.sendMessage(ChatColor.RED + "you are not allowed to use this command: /" + cmd.getName() +" "+ args[0] + "\n" + ChatColor.GRAY + "permission: supertowns.command.spawn");
 				} else if(args[0].equalsIgnoreCase("setflag")) {
 					sender.sendMessage(ChatColor.RED + "you are not allowed to use this command: /" + cmd.getName() +" "+ args[0] + "\n" + ChatColor.GRAY + "permission: supertowns.command.setflag");
-				} else if(args[0].equalsIgnoreCase("flags")) {
+				} else if(args[0].equalsIgnoreCase("flag")) {
 					sender.sendMessage(ChatColor.RED + "you are not allowed to use this command: /" + cmd.getName() +" "+ args[0] + "\n" + ChatColor.GRAY + "permission: supertowns.command.flags");
 				}
 			}

@@ -95,7 +95,7 @@ public class cmdsupertowns {
 					permission perm = new permission();
 					perm.getPermissionError(sender, cmd, args);
 				}
-			} else if(args[0].equalsIgnoreCase("flags")) {
+			} else if(args[0].equalsIgnoreCase("flag")) {
 				if(sender.hasPermission("supertowns.command.flags")) {
 					flags flag = new flags(plugin, api);
 					flag.setFlag(sender, args);
