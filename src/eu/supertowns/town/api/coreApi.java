@@ -67,7 +67,7 @@ public class coreApi {
 						con.save(f);
 					}
 				} else if(type == flagType.explosion) {
-					if(con.getString("townFlag.pvp").equalsIgnoreCase("deny")) {
+					if(con.getString("townFlag.tnt").equalsIgnoreCase("deny")) {
 						con.set("townFlag.tnt", "allow");
 						con.save(f);
 					} else {
