@@ -29,7 +29,7 @@ public class spawn {
 			Player p = (Player) sender;
 			if(args.length == 1) {
 				if(args[0].equalsIgnoreCase("spawn")) {
-					if(api.getTown(p).length() != 0) {
+					if(api.getTown(p) != "null") {
 						String townName = api.getTown(p);
 						try {
 							File f = new File(plugin.getDataFolder() + File.separator + "Towns" + File.separator + townName + ".yml");

@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import eu.supertowns.town.supertowns;
 import eu.supertowns.town.api.coreApi;
 import eu.supertowns.town.commands.minicommands.claim;
+import eu.supertowns.town.commands.minicommands.flags;
 import eu.supertowns.town.commands.minicommands.help;
 import eu.supertowns.town.commands.minicommands.newtown;
 import eu.supertowns.town.commands.minicommands.setspawn;
@@ -90,6 +91,22 @@ public class cmdsupertowns {
 				if(sender.hasPermission("supertowns.command.spawn")) {
 					spawn Spawn = new spawn(plugin, api);
 					Spawn.teleportToTownSpawn(sender, args);
+				} else {
+					permission perm = new permission();
+					perm.getPermissionError(sender, cmd, args);
+				}
+			} else if(args[0].equalsIgnoreCase("flags")) {
+				if(sender.hasPermission("supertowns.command.flags")) {
+					flags flag = new flags(plugin, api);
+					flag.setFlag(sender, args);
+				} else {
+					permission perm = new permission();
+					perm.getPermissionError(sender, cmd, args);
+				}
+			} else if(args[0].equalsIgnoreCase("setflag")) {
+				if(sender.hasPermission("supertowns.command.setflag")) {
+					flags flag = new flags(plugin, api);
+					flag.setFlag(sender, args);
 				} else {
 					permission perm = new permission();
 					perm.getPermissionError(sender, cmd, args);
