@@ -37,6 +37,109 @@ public class coreApi {
 		return null;
 	}
 	
+	public enum flagType {
+		pvp,
+		fire_spread,
+		explosion,
+		mob_protection,
+		hostile_mob_spawn
+	}
+	
+	public void setFlag(String townName, flagType type) {
+		try {
+			File f = new File(plugin.getDataFolder() + File.separator + "Towns" + File.separator + townName + ".yml");
+			if(f.exists()) {
+				FileConfiguration con = YamlConfiguration.loadConfiguration(f);
+				if(type == flagType.pvp) {
+					if(con.getString("townFlag.pvp").equalsIgnoreCase("deny")) {
+						con.set("townFlag.pvp", "allow");
+						con.save(f);
+					} else {
+						con.set("townFlag.pvp", "deny");
+						con.save(f);
+					}
+				} else if(type == flagType.fire_spread) {
+					if(con.getString("townFlag.pvp").equalsIgnoreCase("deny")) {
+						con.set("townFlag.firespread", "allow");
+						con.save(f);
+					} else {
+						con.set("townFlag.firespread", "deny");
+						con.save(f);
+					}
+				} else if(type == flagType.explosion) {
+					if(con.getString("townFlag.pvp").equalsIgnoreCase("deny")) {
+						con.set("townFlag.tnt", "allow");
+						con.save(f);
+					} else {
+						con.set("townFlag.tnt", "deny");
+						con.save(f);
+					}
+				} else if(type == flagType.mob_protection) {
+					if(con.getString("townFlag.setMobProtection").equalsIgnoreCase("allow")) {
+						con.set("townFlag.setMobProtection", "deny");
+						con.save(f);
+					} else {
+						con.set("townFlag.setMobProtection", "allow");
+						con.save(f);
+					}
+				} else if(type == flagType.hostile_mob_spawn) {
+					if(con.getString("townFlag.spawnHostileMobs").equalsIgnoreCase("deny")) {
+						con.set("townFlag.spawnHostileMobs", "allow");
+						con.save(f);
+					} else {
+						con.set("townFlag.spawnHostileMobs", "deny");
+						con.save(f);
+					}
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public String returnFlags(String townName, flagType type) {
+		try {
+			File f = new File(plugin.getDataFolder() + File.separator + "Towns" + File.separator + townName + ".yml");
+			if(f.exists()) {
+				FileConfiguration con = YamlConfiguration.loadConfiguration(f);
+				if(type == flagType.pvp) {
+					if(con.getString("townFlag.pvp").equalsIgnoreCase("deny")) {
+						return ChatColor.GRAY + type.name() + ":" + ChatColor.RED + " deny";
+					} else {
+						return ChatColor.GRAY + type.name() + ":" + ChatColor.GREEN + " allow";
+					}
+				} else if(type == flagType.fire_spread) {
+					if(con.getString("townFlag.firespread").equalsIgnoreCase("deny")) {
+						return ChatColor.GRAY + type.name() + ":" + ChatColor.RED + " deny";
+					} else {
+						return ChatColor.GRAY + type.name() + ":" + ChatColor.GREEN + " allow";
+					}
+				} else if(type == flagType.explosion) {
+					if(con.getString("townFlag.tnt").equalsIgnoreCase("deny")) {
+						return ChatColor.GRAY + type.name() + ":" + ChatColor.RED + " deny";
+					} else {
+						return ChatColor.GRAY + type.name() + ":" + ChatColor.GREEN + " allow";
+					}
+				} else if(type == flagType.mob_protection) {
+					if(con.getString("townFlag.setMobProtection").equalsIgnoreCase("allow")) {
+						return ChatColor.GRAY + type.name() + ":" + ChatColor.GREEN + " allow";
+					} else {
+						return ChatColor.GRAY + type.name() + ":" + ChatColor.RED + " deny";
+					}
+				} else if(type == flagType.hostile_mob_spawn) {
+					if(con.getString("townFlag.spawnHostileMobs").equalsIgnoreCase("deny")) {
+						return ChatColor.GRAY + type.name() + ":" + ChatColor.RED + " deny";
+					} else {
+						return ChatColor.GRAY + type.name() + ":" + ChatColor.GREEN + " allow";
+					}
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public String getTownNameOnLocation(int x, int z, World w) {
 		try {
 			File f = new File(plugin.getDataFolder() + File.separator + "TownBlocks" + File.separator + w.getName() + "_x" + x + "_z"+z + ".yml");
