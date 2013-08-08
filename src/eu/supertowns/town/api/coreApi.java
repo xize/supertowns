@@ -356,6 +356,15 @@ public class coreApi {
 		return false;
 	}
 	
+	public boolean isMember(Player p) {
+		String town = getTown(p);
+		if(town != "null") {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	
 	public void safeTeleport(Player p, FileConfiguration con) {
 		if(p.isInsideVehicle()) {
