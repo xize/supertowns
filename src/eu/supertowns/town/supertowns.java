@@ -9,6 +9,7 @@ import eu.supertowns.town.commands.commandlist;
 import eu.supertowns.town.commands.commands;
 import eu.supertowns.town.configuration.Config;
 import eu.supertowns.town.events.towns.townHandler;
+import eu.supertowns.town.events.wilderness.tntRegen;
 
 public class supertowns extends JavaPlugin {
 	
@@ -38,6 +39,7 @@ public class supertowns extends JavaPlugin {
 	
 	public void onDisable() {
 		logger("has been disabled!", logType.info);
+		eventHandler.saveTNTScheduler(new tntRegen(this, new coreApi(this)));
 	}
 
 }
