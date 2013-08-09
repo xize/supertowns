@@ -9,6 +9,7 @@ import eu.supertowns.town.api.coreApi;
 import eu.supertowns.town.commands.minicommands.claim;
 import eu.supertowns.town.commands.minicommands.flags;
 import eu.supertowns.town.commands.minicommands.help;
+import eu.supertowns.town.commands.minicommands.invite;
 import eu.supertowns.town.commands.minicommands.newtown;
 import eu.supertowns.town.commands.minicommands.setspawn;
 import eu.supertowns.town.commands.minicommands.spawn;
@@ -21,20 +22,20 @@ public class cmdsupertowns {
 		this.plugin = plugin;
 		this.api = api;
 	}
-	
+
 	public String getPrefix(String header) {
 		String head = ChatColor.GOLD + ".oO___[" + header + "]___Oo.";
 		return head;
 	}
-	
+
 	public String getAdminColour(String s) {
 		return ChatColor.RED + s + ChatColor.GRAY + " ";
 	}
-	
+
 	public String getDefaultColour(String s) {
 		return ChatColor.DARK_GRAY + s + ChatColor.GRAY + " ";
 	}
-	
+
 	public boolean execute(CommandSender sender, Command cmd, String[] args) {
 		if(args.length == 0) {
 			if(sender.hasPermission("supertowns.command.help")) {
@@ -111,6 +112,9 @@ public class cmdsupertowns {
 					permission perm = new permission();
 					perm.getPermissionError(sender, cmd, args);
 				}
+			} else if(args[0].equalsIgnoreCase("invite")){
+				invite cInvite = new invite(plugin, api);
+				cInvite.playerInvite(sender, args);
 			}
 		}
 		return false;

@@ -358,11 +358,10 @@ public class coreApi {
 	
 	public boolean isMember(Player p) {
 		String town = getTown(p);
-		if(town != "null") {
+		if(!(town == "null" || town == null)) {
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 	
 	
