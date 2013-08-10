@@ -21,6 +21,46 @@ public class coreApi {
 		this.plugin = plugin;
 	}
 	
+	public void setResident(Player p, String town) {
+		try {
+			File f = new File(plugin.getDataFolder() + File.separator + "players" + File.separator + p.getName() + ".yml");
+			if(!f.exists()) {
+				FileConfiguration con = YamlConfiguration.loadConfiguration(f);
+				con.set("username", p.getName());
+				con.set("type", "resident");
+				con.set("town", town);
+				con.save(f);
+				File ff = new File(plugin.getDataFolder() + File.separator + "Towns" + File.separator + town + ".yml");
+				if(ff.exists()) {
+					FileConfiguration con2 = YamlConfiguration.loadConfiguration(ff);
+					int newCount = con2.getInt("residentsCount") + 1;
+					con2.set("residentsCount", newCount);
+					con2.save(ff);
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void removeResident(Player p, String town) {
+		try {
+			File f = new File(plugin.getDataFolder() + File.separator + "players" + File.separator + p.getName() + ".yml");
+			if(f.exists()) {
+				f.delete();
+				File ff = new File(plugin.getDataFolder() + File.separator + "Towns" + File.separator + town + ".yml");
+				if(ff.exists()) {
+					FileConfiguration con2 = YamlConfiguration.loadConfiguration(ff);
+					int newCount = con2.getInt("residentsCount") - 1;
+					con2.set("residentsCount", newCount);
+					con2.save(ff);
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public String getTown(Player p) {
 		try {
 			File f = new File(plugin.getDataFolder() + File.separator + "players" + File.separator + p.getName() + ".yml");
