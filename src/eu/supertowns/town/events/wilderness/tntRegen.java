@@ -12,12 +12,14 @@ import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.FallingBlock;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.material.MaterialData;
+import org.bukkit.util.Vector;
 
 import eu.supertowns.town.supertowns;
 import eu.supertowns.town.api.coreApi;
@@ -44,11 +46,33 @@ public class tntRegen implements Listener {
 					
 				} else {
 					list.put(block.getLocation(), block.getState().getData());
+					bounceBlock(block);
 					block.setType(Material.AIR);
 				}
 		}
 		//plugin.logger("this is the ArrayList " + list.toString(), logType.info);
 	}
+	
+    public void bounceBlock(Block b) {
+        if(b == null) return;
+        
+        if(list.size() > 1500) {
+        	return;
+        }
+        FallingBlock fb = b.getWorld().spawnFallingBlock(b.getLocation(), b.getType(), b.getData());
+        if(fb.getMaterial() == Material.TNT || fb.getMaterial() == Material.SAND || fb.getMaterial() == Material.GRAVEL || fb.getMaterial() == Material.ANVIL) {
+        	fb.setDropItem(false);
+        	return;
+        }
+        
+        float x = (float) -1 + (float) (Math.random() * ((1 - -1) + 1));
+        float y = 2;//(float) -5 + (float)(Math.random() * ((5 - -5) + 1));
+        float z = (float) -0.3 + (float)(Math.random() * ((0.3 - -0.3) + 1));
+        
+        fb.setDropItem(false);
+        fb.setVelocity(new Vector(x, y, z));
+    }
+
 
 	public void startTntRegen() {
 		Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
@@ -116,6 +140,19 @@ public class tntRegen implements Listener {
 				} else {
 					e.setCancelled(true);
 				}
+			}
+		}
+	}
+	
+	@EventHandler
+	public void breakblock(EntityChangeBlockEvent e) {
+		if(e.getEntity() instanceof FallingBlock) {
+			FallingBlock fb = (FallingBlock) e.getEntity();
+			if(fb.getMaterial() != Material.TNT || fb.getMaterial() != Material.ANVIL || fb.getMaterial() != Material.SAND || fb.getMaterial() != Material.GRAVEL) {
+				fb.setDropItem(false);
+				e.setCancelled(true);
+				//e.getBlock().setType(Material.AIR);
+				//fb.remove();
 			}
 		}
 	}
