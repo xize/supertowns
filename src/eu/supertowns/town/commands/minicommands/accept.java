@@ -34,6 +34,7 @@ public class accept {
 							api.setResident(p, api.getTown(victem));
 							Invite.invites.remove(sender.getName());
 						}
+						sender.sendMessage(ChatColor.GREEN + "successfully accepted town request");
 					} else {
 						sender.sendMessage(ChatColor.RED + "you don't have any town invites open!");
 					}
