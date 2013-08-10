@@ -14,6 +14,7 @@ import eu.supertowns.town.events.wilderness.tntRegen;
 public class supertowns extends JavaPlugin {
 	
 	Logger log = Logger.getLogger("Minecraft");
+	private coreApi api = new coreApi(this);
 	private Config config = new Config(this);
 	private commandlist cmdlist = new commandlist();
 	private commands cmd = new commands(this, new coreApi(this));
@@ -40,6 +41,10 @@ public class supertowns extends JavaPlugin {
 	public void onDisable() {
 		logger("has been disabled!", logType.info);
 		eventHandler.saveTNTScheduler(new tntRegen(this, new coreApi(this)));
+	}
+	
+	public coreApi getCoreApi() {
+		return api;
 	}
 
 }
