@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 import eu.supertowns.town.supertowns;
+import eu.supertowns.town.hooks.worldguard;
 
 public class newtown {
 	supertowns plugin;
@@ -31,7 +32,8 @@ public class newtown {
 							File fGlobal = new File(plugin.getDataFolder() + File.separator + "config.yml");
 							File chunk = new File(plugin.getDataFolder() + File.separator + "TownBlocks" + File.separator + p.getWorld().getName() + "_x" + p.getLocation().getChunk().getX() + "_z" + p.getLocation().getChunk().getZ() + ".yml");
 							File playerFile = new File(plugin.getDataFolder() + File.separator + "players" + File.separator + p.getName() + ".yml");
-							if(!chunk.exists()) {
+							worldguard wg = new worldguard();
+							if(!chunk.exists() || !wg.isInRegion(p)) {
 								if(!fTown.exists()) {
 									FileConfiguration fTowncon = YamlConfiguration.loadConfiguration(fTown);
 									FileConfiguration fGlobalCon = YamlConfiguration.loadConfiguration(fGlobal);
@@ -91,7 +93,7 @@ public class newtown {
 									return;
 								}
 							} else {
-								sender.sendMessage(ChatColor.RED + "error  this town allready exists please use a other name instead");
+								sender.sendMessage(ChatColor.RED + "error  this town allready exists please use a other name instead\nor you tried to create a town inside a worldguard region!");
 								return;
 							}
 						} catch(Exception e) {

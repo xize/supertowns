@@ -14,6 +14,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 import eu.supertowns.town.supertowns;
 import eu.supertowns.town.api.coreApi;
+import eu.supertowns.town.hooks.worldguard;
 
 public class claim {
 	supertowns plugin;
@@ -33,7 +34,8 @@ public class claim {
 							File playerFile = new File(plugin.getDataFolder() + File.separator + "players" + File.separator + p.getName() + ".yml");
 							if(playerFile.exists()) {
 								FileConfiguration playerCon = YamlConfiguration.loadConfiguration(playerFile);
-								if(playerCon.getString("username").equalsIgnoreCase(sender.getName()) && playerCon.getString("type").equalsIgnoreCase("mayor")) {
+								worldguard wg = new worldguard();
+								if(playerCon.getString("username").equalsIgnoreCase(sender.getName()) && playerCon.getString("type").equalsIgnoreCase("mayor") && !wg.isInRegion(p)) {
 									String townName = playerCon.getString("town");
 									if(api.checkTownAtNearbyChunks(p.getLocation().getChunk().getX(), p.getLocation().getChunk().getZ(), p.getWorld(), townName, sender)) {
 										File global = new File(plugin.getDataFolder() + File.separator + "config.yml");
@@ -63,7 +65,7 @@ public class claim {
 										sender.sendMessage(ChatColor.RED + "no chunks where found please get closer to your town instead.");
 									}
 								} else {
-									sender.sendMessage(ChatColor.RED + "you are no mayor in the town " + playerCon.getString("town"));
+									sender.sendMessage(ChatColor.RED + "you are no mayor in the town " + playerCon.getString("town") + " or you tried to claim a chunk in a worldguard region!");
 								}
 							} else {
 								sender.sendMessage(ChatColor.RED + "you don't belong to any town!");
