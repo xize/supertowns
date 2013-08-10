@@ -18,7 +18,7 @@ public class invite {
 		this.api = api;
 	}
 
-	HashMap<String, String> invites = new HashMap<String, String>();
+	public static HashMap<String, String> invites = new HashMap<String, String>();
 
 	public void playerInvite(final CommandSender sender, String[] args) {
 		if(args.length == 2) {

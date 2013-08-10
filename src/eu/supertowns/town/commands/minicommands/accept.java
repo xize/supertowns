@@ -21,18 +21,17 @@ public class accept {
 			if(args[0].equalsIgnoreCase("accept")) {
 				if(sender instanceof Player) {
 					Player p = (Player) sender;
-					invite Invite = new invite(plugin, api);
-					if(Invite.invites.containsKey(p.getName())) {
-						Player victem = Bukkit.getPlayerExact(Invite.invites.get(p.getName()));
+					if(invite.invites.containsKey(p.getName())) {
+						Player victem = Bukkit.getPlayerExact(invite.invites.get(p.getName()));
 						if(victem instanceof Player) {
 							victem.sendMessage(ChatColor.GREEN + p.getName() + " has accepted your town request");
 							Bukkit.broadcastMessage(ChatColor.GREEN + p.getName() + " joined the town " + api.getTown(victem));
 							api.setResident(p, api.getTown(victem));
-							Invite.invites.remove(sender.getName());
+							invite.invites.remove(sender.getName());
 						} else {
 							Bukkit.broadcastMessage(ChatColor.GREEN + p.getName() + " joined the town " + api.getTown(victem));
 							api.setResident(p, api.getTown(victem));
-							Invite.invites.remove(sender.getName());
+							invite.invites.remove(sender.getName());
 						}
 						sender.sendMessage(ChatColor.GREEN + "successfully accepted town request");
 					} else {

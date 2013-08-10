@@ -21,14 +21,13 @@ public class deny {
 			if(args[0].equalsIgnoreCase("deny")) {
 				if(sender instanceof Player) {
 					Player p = (Player) sender;
-					invite Invite = new invite(plugin, api);
-					if(Invite.invites.containsKey(p.getName())) {
-						Player victem = Bukkit.getPlayerExact(Invite.invites.get(p.getName()));
+					if(invite.invites.containsKey(p.getName())) {
+						Player victem = Bukkit.getPlayerExact(invite.invites.get(p.getName()));
 						if(victem instanceof Player) {
 							victem.sendMessage(ChatColor.RED + p.getName() + " has denied your town request");
-							Invite.invites.remove(sender.getName());
+							invite.invites.remove(sender.getName());
 						} else {
-							Invite.invites.remove(sender.getName());
+							invite.invites.remove(sender.getName());
 						}
 						sender.sendMessage(ChatColor.RED + "successfully denied the town request");
 					} else {
