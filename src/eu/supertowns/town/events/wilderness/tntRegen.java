@@ -1,6 +1,5 @@
 package eu.supertowns.town.events.wilderness;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -31,47 +30,46 @@ public class tntRegen implements Listener {
 		this.plugin = plugin;
 		this.api = api;
 	}
-	
+
 	public static HashMap<Location, MaterialData> list = new HashMap<Location, MaterialData>();
-	
+
 	Logger log = Logger.getLogger("Minecraft");
 
 	@EventHandler
 	public void doTntRegen(EntityExplodeEvent e) {
-		Collections.reverse(e.blockList());
 		for(Block block : e.blockList())  {
-				if(block.getType() == Material.AIR || block.getType() == Material.VINE || block.getType() == Material.LADDER || block.getType() == Material.MINECART || block.getType() == Material.FURNACE || block.getType() == Material.CHEST) {
-					e.setCancelled(true);
-				} else if(block.getType() == Material.TNT) {
-					
-				} else {
-					list.put(block.getLocation(), block.getState().getData());
-					bounceBlock(block);
-					block.setType(Material.AIR);
-				}
+			if(block.getType() == Material.AIR || block.getType() == Material.VINE || block.getType() == Material.LADDER || block.getType() == Material.MINECART || block.getType() == Material.FURNACE || block.getType() == Material.CHEST) {
+				e.setCancelled(true);
+			} else if(block.getType() == Material.TNT) {
+
+			} else {
+				list.put(block.getLocation(), block.getState().getData());
+				bounceBlock(block);
+				block.setType(Material.AIR);
+			}
 		}
 		//plugin.logger("this is the ArrayList " + list.toString(), logType.info);
 	}
-	
-    public void bounceBlock(Block b) {
-        if(b == null) return;
-        
-        if(list.size() > 1500) {
-        	return;
-        }
-        FallingBlock fb = b.getWorld().spawnFallingBlock(b.getLocation(), b.getType(), b.getData());
-        if(fb.getMaterial() == Material.TNT || fb.getMaterial() == Material.SAND || fb.getMaterial() == Material.GRAVEL || fb.getMaterial() == Material.ANVIL) {
-        	fb.setDropItem(false);
-        	return;
-        }
-        
-        float x = (float) -1 + (float) (Math.random() * ((1 - -1) + 1));
-        float y = 2;//(float) -5 + (float)(Math.random() * ((5 - -5) + 1));
-        float z = (float) -0.3 + (float)(Math.random() * ((0.3 - -0.3) + 1));
-        
-        fb.setDropItem(false);
-        fb.setVelocity(new Vector(x, y, z));
-    }
+
+	public void bounceBlock(Block b) {
+		if(b == null) return;
+
+		if(list.size() > 1500) {
+			return;
+		}
+		FallingBlock fb = b.getWorld().spawnFallingBlock(b.getLocation(), b.getType(), b.getData());
+		if(fb.getMaterial() == Material.TNT || fb.getMaterial() == Material.SAND || fb.getMaterial() == Material.GRAVEL || fb.getMaterial() == Material.ANVIL) {
+			fb.setDropItem(false);
+			return;
+		}
+
+		float x = (float) -1 + (float) (Math.random() * ((1 - -1) + 1));
+		float y = 2;//(float) -5 + (float)(Math.random() * ((5 - -5) + 1));
+		float z = (float) -0.3 + (float)(Math.random() * ((0.3 - -0.3) + 1));
+
+		fb.setDropItem(false);
+		fb.setVelocity(new Vector(x, y, z));
+	}
 
 
 	public void startTntRegen() {
@@ -116,45 +114,21 @@ public class tntRegen implements Listener {
 
 	@EventHandler
 	public void checkonFallingBlocks(EntityChangeBlockEvent e) {
-		if(e.getBlock().getType() == Material.SAND || e.getBlock().getType() == Material.GRAVEL || e.getBlock().getType() == Material.ANVIL) {
-			Iterator<Entry<Location, MaterialData>> it = list.entrySet().iterator();
-			while(it.hasNext()) {
-				Map.Entry<Location, MaterialData> its = (Map.Entry<Location, MaterialData>) it.next();
-				Location loca = (Location) its.getKey();
-				Block block = loca.getBlock();
-				/*double listx = (double) block.getLocation().getX();
-				double listy = (double) block.getLocation().getY();
-				double listz = (double) block.getLocation().getZ();
-				double blockx = (double) e.getBlock().getLocation().getX();
-				double blocky = (double) e.getBlock().getLocation().getY();
-				double blockz = (double) e.getBlock().getLocation().getZ();
-				plugin.logger("eventBlock(x:" + blockx + " y:" + blocky + " z:" + blockz + ")", logType.info);
-				plugin.logger("listBlock(x:" + listx + " y:" + listy + " z:" + listz + ")", logType.info);
-				 */
-				if(e.getBlock().equals(block)) {
-					if(block.getType() == Material.SAND || block.getType() == Material.GRAVEL || block.getType() == Material.ANVIL) {
-						e.setCancelled(true);	
-					} else {
+		if(!list.isEmpty()) {
+			if(e.getEntity() instanceof FallingBlock) {
+				FallingBlock fb = (FallingBlock) e.getEntity();
+				for(Location loc : list.keySet()) {
+					if(fb.getLocation().getBlock().getLocation().equals(loc)) {
+						//plugin.logger("found location match", logType.info);
+						e.setCancelled(true);
+					} else if(fb.getMaterial() != Material.SAND || fb.getMaterial() != Material.GRAVEL || fb.getMaterial() != Material.ANVIL) {
+						//plugin.logger("block projecttile has been canceled this is the material: " + fb.getMaterial().name(), logType.info);
 						e.setCancelled(true);
 					}
-				} else {
-					e.setCancelled(true);
 				}
 			}
 		}
 	}
-	
-	@EventHandler
-	public void breakblock(EntityChangeBlockEvent e) {
-		if(e.getEntity() instanceof FallingBlock) {
-			FallingBlock fb = (FallingBlock) e.getEntity();
-			if(fb.getMaterial() != Material.TNT || fb.getMaterial() != Material.ANVIL || fb.getMaterial() != Material.SAND || fb.getMaterial() != Material.GRAVEL) {
-				fb.setDropItem(false);
-				e.setCancelled(true);
-				//e.getBlock().setType(Material.AIR);
-				//fb.remove();
-			}
-		}
-	}
+
 
 }
