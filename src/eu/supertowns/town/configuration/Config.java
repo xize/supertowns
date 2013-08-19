@@ -38,10 +38,8 @@ public class Config {
 				 con.set("townProtect.removeHostileMobs", true);
 				 con.set("townProtect.protectPeacefullMobs", true);
 				 con.set("townProtect.disableInteractionForOutsiders", true);
-				 con.set("townDisband.enableAdminAproval", true);
-				 con.set("townDisband.forceOtherMayor", true);
-				 con.set("townDisband.removeProtection", true);
-				 con.set("townDisband.autoregen", true);
+				 con.set("AdminTownDisband.removeProtection", true);
+				 con.set("AdminTownDisband.autoregen", true);
 				 con.set("wilderness.autoregenExplosives", true);
 				 con.set("wilderness.disableTnt", false);
 				 con.set("wilderness.disableFirespread", true);

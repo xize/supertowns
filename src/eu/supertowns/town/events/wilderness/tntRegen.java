@@ -14,7 +14,6 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.material.MaterialData;
@@ -95,40 +94,12 @@ public class tntRegen implements Listener {
 		}, 0, 1);
 	}
 
-	@EventHandler
-	public void spreads(BlockFromToEvent e) {
-		if(e.getBlock().getType() == Material.STATIONARY_WATER || e.getBlock().getType() == Material.STATIONARY_LAVA) {
-			Iterator<Entry<Location, MaterialData>> it = list.entrySet().iterator();
-			while(it.hasNext()) {
-				Map.Entry<Location, MaterialData> its = (Map.Entry<Location, MaterialData>) it.next();
-				Location loca = (Location) its.getKey();
-				Block block = loca.getBlock();
-				if(e.getBlock().equals(block)) {
-					if(block.getType() == Material.STATIONARY_WATER || block.getType() == Material.STATIONARY_LAVA || block.getType() == Material.WATER || block.getType() == Material.LAVA) {
-						e.setCancelled(true);	
-					}
-				}
-			}
-		}
+@EventHandler
+public void removeBlock(EntityChangeBlockEvent e) {
+	if(!list.isEmpty()) {
+		e.setCancelled(true);
 	}
-
-	@EventHandler
-	public void checkonFallingBlocks(EntityChangeBlockEvent e) {
-		if(!list.isEmpty()) {
-			if(e.getEntity() instanceof FallingBlock) {
-				FallingBlock fb = (FallingBlock) e.getEntity();
-				for(Location loc : list.keySet()) {
-					if(fb.getLocation().getBlock().getLocation().equals(loc)) {
-						//plugin.logger("found location match", logType.info);
-						e.setCancelled(true);
-					} else if(fb.getMaterial() != Material.SAND || fb.getMaterial() != Material.GRAVEL || fb.getMaterial() != Material.ANVIL) {
-						//plugin.logger("block projecttile has been canceled this is the material: " + fb.getMaterial().name(), logType.info);
-						e.setCancelled(true);
-					}
-				}
-			}
-		}
-	}
+}
 
 
 }

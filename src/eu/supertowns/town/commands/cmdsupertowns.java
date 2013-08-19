@@ -12,6 +12,7 @@ import eu.supertowns.town.commands.minicommands.deny;
 import eu.supertowns.town.commands.minicommands.flags;
 import eu.supertowns.town.commands.minicommands.help;
 import eu.supertowns.town.commands.minicommands.invite;
+import eu.supertowns.town.commands.minicommands.leave;
 import eu.supertowns.town.commands.minicommands.newtown;
 import eu.supertowns.town.commands.minicommands.setspawn;
 import eu.supertowns.town.commands.minicommands.spawn;
@@ -92,6 +93,14 @@ public class cmdsupertowns {
 				if(sender.hasPermission("supertowns.command.towndeny")) {
 					deny Deny = new deny(plugin, api);
 					Deny.denyTown(sender, args);
+				} else {
+					permission perm = new permission();
+					perm.getPermissionError(sender, cmd, args);
+				}
+			} else if(args[0].equalsIgnoreCase("leave")) {
+				if(sender.hasPermission("supertowns.command.leave")) {
+					leave Leave = new leave(plugin, api);
+					Leave.onTownLeave(sender, args);
 				} else {
 					permission perm = new permission();
 					perm.getPermissionError(sender, cmd, args);

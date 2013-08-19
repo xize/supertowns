@@ -49,24 +49,14 @@ public class configCheck {
 			con.set("townProtect.disableInteractionForOutsiders", true);
 			con.save(f);
 		}
-		if(!con.contains("townDisband.enableAdminAproval")) {
-			plugin.logger("no entry found for config option townDisband.enableAdminAproval, we change the config now!", logType.servere);
-			con.set("townDisband.enableAdminAproval", true);
+		if(!con.contains("AdminTownDisband.removeProtection")) {
+			plugin.logger("no entry found for config option AdminTownDisband.removeProtection, we change the config now!", logType.servere);
+			con.set("AdminTownDisband.removeProtection", true);
 			con.save(f);
 		}
-		if(!con.contains("townDisband.forceOtherMayor")) {
-			plugin.logger("no entry found for config option townDisband.forceOtherMayor, we change the config now!", logType.servere);
-			con.set("townDisband.forceOtherMayor", true);
-			con.save(f);
-		}
-		if(!con.contains("townDisband.removeProtection")) {
-			plugin.logger("no entry found for config option townDisband.removeProtection, we change the config now!", logType.servere);
-			con.set("townDisband.removeProtection", true);
-			con.save(f);
-		}
-		if(!con.contains("townDisband.autoregen")) {
-			plugin.logger("no entry found for config option townDisband.autoregen, we change the config now!", logType.servere);
-			con.set("townDisband.autoregen", true);
+		if(!con.contains("AdminTownDisband.autoregen")) {
+			plugin.logger("no entry found for config option AdminTownDisband.autoregen, we change the config now!", logType.servere);
+			con.set("AdminTownDisband.autoregen", true);
 			con.save(f);
 		}
 		if(!con.contains("wilderness.autoregenExplosives")) {
