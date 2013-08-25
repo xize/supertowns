@@ -180,6 +180,49 @@ public class coreApi {
 		return null;
 	}
 	
+	public boolean returnFlagTypes(String townName, flagType type) {
+		try {
+			File f = new File(plugin.getDataFolder() + File.separator + "Towns" + File.separator + townName + ".yml");
+			if(f.exists()) {
+				FileConfiguration con = YamlConfiguration.loadConfiguration(f);
+				if(type == flagType.pvp) {
+					if(con.getString("townFlag.pvp").equalsIgnoreCase("deny")) {
+						return true;
+					} else {
+						return false;
+					}
+				} else if(type == flagType.fire_spread) {
+					if(con.getString("townFlag.firespread").equalsIgnoreCase("deny")) {
+						return true;
+					} else {
+						return false;
+					}
+				} else if(type == flagType.explosion) {
+					if(con.getString("townFlag.tnt").equalsIgnoreCase("deny")) {
+						return true;
+					} else {
+						return false;
+					}
+				} else if(type == flagType.mob_protection) {
+					if(con.getString("townFlag.setMobProtection").equalsIgnoreCase("allow")) {
+						return true;
+					} else {
+						return false;
+					}
+				} else if(type == flagType.hostile_mob_spawn) {
+					if(con.getString("townFlag.spawnHostileMobs").equalsIgnoreCase("deny")) {
+						return true;
+					} else {
+						return false;
+					}
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	public String getTownNameOnLocation(int x, int z, World w) {
 		try {
 			File f = new File(plugin.getDataFolder() + File.separator + "TownBlocks" + File.separator + w.getName() + "_x" + x + "_z"+z + ".yml");
