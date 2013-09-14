@@ -102,10 +102,12 @@ public class townHandler {
 		return new Location(Bukkit.getWorld(loc[0]), Double.parseDouble(loc[1]), Double.parseDouble(loc[2]), Double.parseDouble(loc[3]));
 	}
 
+	@SuppressWarnings("deprecation")
 	public String SerializeMaterialData(MaterialData data) {
 		return data.getItemType().name() + "," + data.getData();
 	}
 
+	@SuppressWarnings("deprecation")
 	public MaterialData DeSerializeMaterialData(String s) {
 		String[] splitData = s.split(",");
 		return new MaterialData(Material.valueOf(splitData[0]), Byte.parseByte(splitData[1]));
