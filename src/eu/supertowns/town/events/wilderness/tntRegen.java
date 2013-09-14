@@ -31,48 +31,67 @@ public class tntRegen implements Listener {
 	}
 
 	public static HashMap<Location, MaterialData> list = new HashMap<Location, MaterialData>();
-
+	public Material[] AllowedMaterials = {Material.WOOD, 
+			Material.GLASS, Material.THIN_GLASS,
+			Material.BRICK,
+			Material.COBBLESTONE,
+			Material.COBBLESTONE_STAIRS,
+			Material.NETHER_BRICK,
+			Material.NETHERRACK,
+			Material.DIRT,
+			Material.STONE,
+			Material.SAND,
+			Material.WOOD_STAIRS,
+			Material.WOOD_STEP,
+			Material.DIRT,
+			Material.GRASS,
+			
+			};
+	
 	Logger log = Logger.getLogger("Minecraft");
 
 	@EventHandler
 	public void doTntRegen(EntityExplodeEvent e) {
-		for(Block block : e.blockList())  {
-			if(block.getType() == Material.AIR || block.getType() == Material.VINE || block.getType() == Material.LADDER || block.getType() == Material.MINECART || block.getType() == Material.FURNACE || block.getType() == Material.CHEST) {
-				e.setCancelled(true);
-			} else if(block.getType() == Material.TNT) {
-
-			} else {
-				list.put(block.getLocation(), block.getState().getData());
-				bounceBlock(block);
-				block.setType(Material.AIR);
-			}
+		for(Block block : e.blockList()) {
+				if(block.getType() == Material.CHEST || block.getType() == Material.FURNACE || block.getType() == Material.ANVIL || block.getType() == Material.BED || block.getType() == Material.BREWING_STAND || block.getType() == Material.WOOD_DOOR || block.getType() == Material.IRON_DOOR || block.getType() == Material.TORCH || block.getType() == Material.REDSTONE_WIRE || block.getType() == Material.REDSTONE_COMPARATOR || block.getType() == Material.REDSTONE_TORCH_ON || block.getType() == Material.REDSTONE_TORCH_OFF) {
+					e.setCancelled(true);
+				} else if(block.getType() == Material.TNT) {
+					//leave empty ignore tnt
+				} else {
+					list.put(block.getLocation(), block.getState().getData());
+					bounceBlock(block);
+					block.setType(Material.AIR);	
+				}
 		}
-		//plugin.logger("this is the ArrayList " + list.toString(), logType.info);
 	}
 
+	@SuppressWarnings("deprecation")
 	public void bounceBlock(Block b) {
 		if(b == null) return;
 
 		if(list.size() > 1500) {
 			return;
 		}
-		FallingBlock fb = b.getWorld().spawnFallingBlock(b.getLocation(), b.getType(), b.getData());
-		if(fb.getMaterial() == Material.TNT || fb.getMaterial() == Material.SAND || fb.getMaterial() == Material.GRAVEL || fb.getMaterial() == Material.ANVIL) {
-			fb.setDropItem(false);
-			return;
+		
+		for(Material mat : AllowedMaterials) {
+			if(b.getType() == mat) {
+				FallingBlock fb = b.getWorld().spawnFallingBlock(b.getLocation(), b.getType(), b.getData());
+				
+
+				float x = (float) -1 + (float) (Math.random() * ((1 - -1) + 1));
+				float y = 2;//(float) -5 + (float)(Math.random() * ((5 - -5) + 1));
+				float z = (float) -0.3 + (float)(Math.random() * ((0.3 - -0.3) + 1));
+
+				fb.setDropItem(false);
+				fb.setVelocity(new Vector(x, y, z));
+			}
 		}
-
-		float x = (float) -1 + (float) (Math.random() * ((1 - -1) + 1));
-		float y = 2;//(float) -5 + (float)(Math.random() * ((5 - -5) + 1));
-		float z = (float) -0.3 + (float)(Math.random() * ((0.3 - -0.3) + 1));
-
-		fb.setDropItem(false);
-		fb.setVelocity(new Vector(x, y, z));
 	}
 
 
 	public void startTntRegen() {
 		Bukkit.getScheduler().runTaskTimer(plugin, new Runnable() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void run() {
 				if(list.isEmpty() || list.size() == 0) {
@@ -94,12 +113,12 @@ public class tntRegen implements Listener {
 		}, 0, 1);
 	}
 
-@EventHandler
-public void removeBlock(EntityChangeBlockEvent e) {
-	if(!list.isEmpty()) {
-		e.setCancelled(true);
+	@EventHandler
+	public void removeBlock(EntityChangeBlockEvent e) {
+		if(!list.isEmpty()) {
+			e.setCancelled(true);
+		}
 	}
-}
-
-
+	
+	
 }
